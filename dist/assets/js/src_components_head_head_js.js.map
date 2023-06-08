@@ -1,0 +1,1 @@
+{"version":3,"file":"assets/js/src_components_head_head_js.js","mappings":";;;;;;;;AAAAA,QAAQ,CAACC,aAAa,CAAC,OAAO,CAAC,CAACC,SAAS,GAAGC,qBAAK,GAAG,WAAW","sources":["webpack://template/./src/components/head/head.js"],"sourcesContent":["document.querySelector(\"title\").innerText = TITLE + \" by DFRNC\";"],"names":["document","querySelector","innerText","TITLE"],"sourceRoot":""}

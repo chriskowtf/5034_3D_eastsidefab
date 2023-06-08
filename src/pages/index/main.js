@@ -13,11 +13,11 @@ import GUI from 'lil-gui';
 
 
 
-require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/202V4-newColor.gltf")
+require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/animscene2.gltf")
 require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/adams_place_bridge_low.hdr")
 
 // require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/ESF_1.gltf")
-// require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/202V4-newColor.gltf")
+// require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/animscene2.gltf")
 // require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/ESF_3.gltf")
 // require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/ESF_4.gltf")
 // require("!!file-loader?outputPath=./assets/img/&name=[name].[ext]!./img/sc_bg0.png")
@@ -29,7 +29,7 @@ require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/adams_plac
 
 export const mainAnim = function (idContainer, targetLoader, callback) {
   const gui = new GUI();
-  // gui.hide()
+  gui.hide()
   // const myObject = {
   //   background: "bg_3",
   //   backgroundVar: {
@@ -147,7 +147,7 @@ export const mainAnim = function (idContainer, targetLoader, callback) {
      * camera
      */
 
-    sObj.camera = new THREE.PerspectiveCamera(fov, container.offsetWidth / container.offsetHeight, 1.001, 1000);
+    sObj.camera = new THREE.PerspectiveCamera(fov, container.offsetWidth / container.offsetHeight, 0.001, 1000);
 
     sObj.camera.position.set(0.385, 10.1, 20)
     // sObj.camera.zoom = 0.4
@@ -202,8 +202,8 @@ export const mainAnim = function (idContainer, targetLoader, callback) {
 
 
 
-    const spotLight = new THREE.SpotLight();
-    spotLight.position.set(10, 7, 12);
+    // const spotLight = new THREE.SpotLight();
+    // spotLight.position.set(10, 7, 12);
     // spotLight.color = new THREE.Color(0xfff0ae);
     // spotLight.intensity = 5;
     // spotLight.distance = 50;
@@ -212,7 +212,7 @@ export const mainAnim = function (idContainer, targetLoader, callback) {
     // spotLight.decay = 1;
     // spotLight.castShadow = true;
     // sObj.spotLight = spotLight
-    scene.add(spotLight);
+    // scene.add(spotLight);
 
     // const spotLightHelper = new THREE.SpotLightHelper(spotLight);
     // spotLightHelper.visible = debugMode
@@ -259,33 +259,33 @@ export const mainAnim = function (idContainer, targetLoader, callback) {
     }
     let mouseMove = false
 
-    loader.load(loaderModelUrl + "202V4-newColor.gltf", function (gltf) {
+
+
+
+    loader.load(loaderModelUrl + "animscene2.gltf", function (gltf) {
       gltf.scene.traverse(function (object) {
         if (object.isMesh) {
           object.castShadow = true;
           object.receiveShadow = true;
         }
+        if (object.type == 'SkinnedMesh') {
+          object.frustumCulled = false;
+          // console.log(object);
+        }
       });
 
       const animations = gltf.animations
-      // console.log(animations);
+      console.log(animations);
       mixer.st1 = new THREE.AnimationMixer(gltf.scene)
       animClip.st1 = []
       animations.forEach((anim, i) => {
-        // if (anim.name == "animFinish") {
         animClip.st1.push(mixer.st1.clipAction(anim))
-
-        animClip.st1[i].loop = THREE.LoopPingPong;
-        // animClip.st1[i].weight = 0
-        // animClip.st1[i].blendMode = THREE.AdditiveAnimationBlendMode
+        // animClip.st1[i].loop = THREE.LoopPingPong;
         animClip.st1[i].clampWhenFinished = true
         animClip.st1[i].zeroSlopeAtStart = true
         animClip.st1[i].zeroSlopeAtEnd = true
-        // animClip.st1[i].fadeIn(2);
-        // animClip.st1[i].play();
 
         console.log(anim);
-        // }
       })
       scene.add(gltf.scene)
 
@@ -296,8 +296,6 @@ export const mainAnim = function (idContainer, targetLoader, callback) {
       animHoverArr.push(scene.getObjectByName("scene05"))
 
       window.addEventListener("click", onmousemove, false);
-
-
 
     })
 
@@ -351,10 +349,16 @@ export const mainAnim = function (idContainer, targetLoader, callback) {
                   gsap.to(cameraTarget.position, { duration: 1, ease: "none", x: -2, y: 5.7, z: -1.2 });
                   break;
                 case "scene05":
-                  gsap.to(sObj.camera.position, { duration: 1, ease: "none", x: 3.4, y: 12.5, z: 15.5 });
+                  gsap.to(sObj.camera.position, { duration: 1, ease: "none", x: 6.2, y: 4.5, z: 8.5 });
+                  gsap.to(cameraTarget.position, { duration: 1, ease: "none", x: 8, y: 1.4, z: -0.2 });
                   break;
               }
-
+              if (animClip.st1[i].paused = true) {
+                animClip.st1[i].paused = false;
+                animClip.st1[i].play();
+              } else {
+                animClip.st1[i].play();
+              }
             }
             intersects[0].object.hoverAnim = true;
           } else {
@@ -368,7 +372,7 @@ export const mainAnim = function (idContainer, targetLoader, callback) {
                   sObj.camera.updateProjectionMatrix();
                 }
               });
-              animClip.st1[i].stop();
+              animClip.st1[i].paused = true;
             }
             elem.hoverAnim = false;
           }

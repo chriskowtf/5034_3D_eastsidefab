@@ -3,7 +3,7 @@ import("../../components/loader/loader.sass")
 import "./index.scss"
 import { mainAnim } from "./main"
 
-require("!!file-loader?outputPath=./&name=[name].[ext]!./index.php")
+// require("!!file-loader?outputPath=./&name=[name].[ext]!./index.php")
 
 
 
