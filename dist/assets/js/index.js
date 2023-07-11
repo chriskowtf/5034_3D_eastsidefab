@@ -7513,11 +7513,11 @@ __webpack_require__.r(__webpack_exports__);
 // import anim_scene_3 from './anim_scene_3'
 // import anim_scene_4 from './anim_scene_4'
 
-__webpack_require__(/*! !!file-loader?outputPath=./models/&name=[name].[ext]!./model/animscene2.gltf */ "./node_modules/file-loader/dist/cjs.js?outputPath=./models/&name=[name].[ext]!./src/pages/index/model/animscene2.gltf");
+__webpack_require__(/*! !!file-loader?outputPath=./models/&name=[name].[ext]!./model/TEST.gltf */ "./node_modules/file-loader/dist/cjs.js?outputPath=./models/&name=[name].[ext]!./src/pages/index/model/TEST.gltf");
 __webpack_require__(/*! !!file-loader?outputPath=./models/&name=[name].[ext]!./model/adams_place_bridge_low.hdr */ "./node_modules/file-loader/dist/cjs.js?outputPath=./models/&name=[name].[ext]!./src/pages/index/model/adams_place_bridge_low.hdr");
 
 // require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/ESF_1.gltf")
-// require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/animscene2.gltf")
+// require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/TEST.gltf")
 // require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/ESF_3.gltf")
 // require("!!file-loader?outputPath=./models/&name=[name].[ext]!./model/ESF_4.gltf")
 // require("!!file-loader?outputPath=./assets/img/&name=[name].[ext]!./img/sc_bg0.png")
@@ -7565,6 +7565,7 @@ const mainAnim = function (idContainer, targetLoader, callback) {
   if (window.location.hash == "#debug") {
     document.body.classList.add("debugMode");
     debugMode = true;
+    gui.show();
   }
 
   // const stats = new Stats()
@@ -7641,7 +7642,7 @@ const mainAnim = function (idContainer, targetLoader, callback) {
      */
 
     sObj.camera = new three__WEBPACK_IMPORTED_MODULE_2__.PerspectiveCamera(fov, container.offsetWidth / container.offsetHeight, 0.001, 1000);
-    sObj.camera.position.set(0.385, 10.1, 20);
+    sObj.camera.position.set(10.1, 10.05, 30.7);
     // sObj.camera.zoom = 0.4
     // sObj.camera.updateProjectionMatrix();
     // console.log(sObj.camera.rotation);
@@ -7651,14 +7652,15 @@ const mainAnim = function (idContainer, targetLoader, callback) {
       //   color: "#00ff00",
       // })
     );
-    cameraTarget.position.set(0.2, 0, 0);
+    cameraTarget.position.set(10.05, -8, -6.3);
     scene.add(cameraTarget);
-    gui.add(sObj.camera.position, 'x').min(-35).max(35).step(0.001).name('lightX');
-    gui.add(sObj.camera.position, 'y').min(-35).max(35).step(0.001).name('lightY');
-    gui.add(sObj.camera.position, 'z').min(-35).max(35).step(0.001).name('lightZ');
+    gui.add(sObj.camera.position, 'x').min(-35).max(35).step(0.001).name('positionX');
+    gui.add(sObj.camera.position, 'y').min(-35).max(35).step(0.001).name('positionY');
+    gui.add(sObj.camera.position, 'z').min(-35).max(35).step(0.001).name('positionZ');
     gui.add(cameraTarget.position, 'x').min(-35).max(35).step(0.001).name('positionX');
     gui.add(cameraTarget.position, 'y').min(-35).max(35).step(0.001).name('rotationY');
     gui.add(cameraTarget.position, 'z').min(-35).max(35).step(0.001).name('rotationZ');
+
     // sObj.camera.zoom = 0.2;
     // gui.add(sObj.camera, 'zoom', 0.01, 1, 0.01).listen();
     // const minMaxGUIHelper = new MinMaxGUIHelper(sObj.camera, 'near', 'far', 0.1);
@@ -7683,10 +7685,10 @@ const mainAnim = function (idContainer, targetLoader, callback) {
     const light = new three__WEBPACK_IMPORTED_MODULE_2__.AmbientLight(0xffffff, 0.02); // soft white light
     scene.add(light);
     const directionalLight = new three__WEBPACK_IMPORTED_MODULE_2__.DirectionalLight(0xffffff, 2.3);
-    directionalLight.position.set(35, -35, -35);
-    gui.add(directionalLight.position, 'x').min(-35).max(35).step(0.001).name('positionX');
-    gui.add(directionalLight.position, 'y').min(-35).max(35).step(0.001).name('positionY');
-    gui.add(directionalLight.position, 'z').min(-35).max(35).step(0.001).name('positionZ');
+    directionalLight.position.set(-35, -16.6, 35);
+    gui.add(directionalLight.position, 'x').min(-35).max(35).step(0.001).name('lightX');
+    gui.add(directionalLight.position, 'y').min(-35).max(35).step(0.001).name('lightY');
+    gui.add(directionalLight.position, 'z').min(-35).max(35).step(0.001).name('lightZ');
     scene.add(directionalLight);
 
     // const spotLight = new THREE.SpotLight();
@@ -7745,7 +7747,7 @@ const mainAnim = function (idContainer, targetLoader, callback) {
       pos: new three__WEBPACK_IMPORTED_MODULE_2__.Vector3(0, 0, 10)
     };
     let mouseMove = false;
-    loader.load(loaderModelUrl + "animscene2.gltf", function (gltf) {
+    loader.load(loaderModelUrl + "TEST.gltf", function (gltf) {
       gltf.scene.traverse(function (object) {
         if (object.isMesh) {
           object.castShadow = true;
@@ -7775,8 +7777,13 @@ const mainAnim = function (idContainer, targetLoader, callback) {
       animHoverArr.push(scene.getObjectByName("scene03"));
       animHoverArr.push(scene.getObjectByName("scene04"));
       animHoverArr.push(scene.getObjectByName("scene05"));
+      animHoverArr.push(scene.getObjectByName("scene06"));
+      animHoverArr.push(scene.getObjectByName("scene07"));
+      animHoverArr.push(scene.getObjectByName("scene08"));
+      animHoverArr.push(scene.getObjectByName("scene09"));
       window.addEventListener("click", onmousemove, false);
     });
+    console.log(animClip.st1);
     function onmousemove(event) {
       mouseArr.x = (event.clientX - container.getBoundingClientRect().left) / container.offsetWidth * 2 - 1;
       mouseArr.y = (-event.clientY + container.getBoundingClientRect().top) / container.offsetHeight * 2 + 1;
@@ -7791,94 +7798,153 @@ const mainAnim = function (idContainer, targetLoader, callback) {
             for (let i = 0; i < animClip.st1.length; i++) {
               switch (objectName) {
                 case "scene01":
-                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(sObj.camera.position, {
-                    duration: 1,
-                    ease: "none",
-                    x: 3.4,
-                    y: 4.5,
-                    z: 11.5
-                  });
+                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].timeline({
+                    defaults: {
+                      duration: 1.5,
+                      ease: "power3.inOut"
+                    }
+                  }).to(sObj.camera.position, {
+                    x: -7,
+                    y: 3.1,
+                    z: 19.5
+                  }).to(cameraTarget.position, {
+                    x: 18.65,
+                    y: -8,
+                    z: -6.3
+                  }, "<");
                   break;
                 case "scene02":
-                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(sObj.camera.position, {
-                    duration: 1,
-                    ease: "none",
-                    x: -8.8,
-                    y: 4,
-                    z: 12.6
-                  });
-                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(cameraTarget.position, {
-                    duration: 1,
-                    ease: "none",
-                    x: -4.5,
-                    y: -5.5,
-                    z: -8
-                  });
+                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].timeline({
+                    defaults: {
+                      duration: 1.5,
+                      ease: "power3.inOut"
+                    }
+                  }).to(sObj.camera.position, {
+                    x: -0.2,
+                    y: 3.16,
+                    z: 24.7
+                  }).to(cameraTarget.position, {
+                    x: 19.5,
+                    y: -8,
+                    z: -6.3
+                  }, "<");
                   break;
                 case "scene03":
-                  animClip.st1[i].play();
-                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(sObj.camera.position, {
-                    duration: 1,
-                    ease: "none",
-                    x: -3.7,
-                    y: 4.8,
-                    z: 7.5
-                  });
-                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(sObj.camera, {
-                    duration: 1,
-                    ease: "none",
-                    zoom: 1.2,
-                    onUpdate: function () {
-                      sObj.camera.updateProjectionMatrix();
+                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].timeline({
+                    defaults: {
+                      duration: 1.5,
+                      ease: "power3.inOut"
                     }
-                  });
-                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(cameraTarget.position, {
-                    duration: 1,
-                    ease: "none",
-                    x: -9.7,
-                    y: 2.3,
-                    z: -1.2
-                  });
+                  }).to(sObj.camera.position, {
+                    x: 8.3,
+                    y: 3.16,
+                    z: 24.7
+                  }).to(cameraTarget.position, {
+                    x: 19.5,
+                    y: -8,
+                    z: -6.3
+                  }, "<");
                   break;
                 case "scene04":
-                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(sObj.camera.position, {
-                    duration: 1,
-                    ease: "none",
-                    x: -5.4,
-                    y: 10.9,
-                    z: 11.8
-                  });
-                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(sObj.camera, {
-                    duration: 1,
-                    ease: "none",
-                    zoom: 1.8,
+                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].timeline({
+                    defaults: {
+                      duration: 1.5,
+                      ease: "power3.inOut"
+                    }
+                  }).to(sObj.camera.position, {
+                    x: 18.6,
+                    y: 3.16,
+                    z: 24.7
+                  }).to(cameraTarget.position, {
+                    x: 19.5,
+                    y: -8,
+                    z: -6.3
+                  }, "<");
+                  break;
+                case "scene05":
+                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].timeline({
+                    defaults: {
+                      duration: 1.5,
+                      ease: "power3.inOut"
+                    }
+                  }).to(sObj.camera.position, {
+                    x: 8.3,
+                    y: 5.7,
+                    z: 18.6
+                  }).to(cameraTarget.position, {
+                    x: 11.7,
+                    y: -4.6,
+                    z: -6.3
+                  }, "<");
+                  break;
+                case "scene06":
+                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].timeline({
+                    defaults: {
+                      duration: 1.5,
+                      ease: "power3.inOut"
+                    }
+                  }).to(sObj.camera.position, {
+                    x: 14.3,
+                    y: 4,
+                    z: 16.07
+                  }).to(cameraTarget.position, {
+                    x: 22.95,
+                    y: -8,
+                    z: -6.3
+                  }, "<");
+                  break;
+                case "scene07":
+                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].timeline({
+                    defaults: {
+                      duration: 1.5,
+                      ease: "power3.inOut"
+                    }
+                  }).to(sObj.camera.position, {
+                    x: 12.6,
+                    y: 5.7,
+                    z: 16
+                  }).to(cameraTarget.position, {
+                    x: 4,
+                    y: -8,
+                    z: -6.3
+                  }, "<");
+                  break;
+                case "scene08":
+                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].timeline({
+                    defaults: {
+                      duration: 1.5,
+                      ease: "power3.inOut"
+                    }
+                  }).to(sObj.camera.position, {
+                    x: 13.4,
+                    y: 4.9,
+                    z: 10
+                  }).to(cameraTarget.position, {
+                    x: 11.8,
+                    y: 0.6,
+                    z: -6.3
+                  }, "<").to(sObj.camera, {
+                    zoom: 1.7,
                     onUpdate: function () {
                       sObj.camera.updateProjectionMatrix();
                     }
-                  });
-                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(cameraTarget.position, {
-                    duration: 1,
-                    ease: "none",
-                    x: -2,
-                    y: 5.7,
-                    z: -1.2
-                  });
+                  }, "<");
                   break;
-                case "scene05":
-                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(sObj.camera.position, {
-                    duration: 1,
-                    ease: "none",
-                    x: 6.2,
-                    y: 4.5,
-                    z: 8.5
-                  });
-                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(cameraTarget.position, {
-                    duration: 1,
-                    ease: "none",
-                    x: 8,
-                    y: 1.4,
-                    z: -0.2
-                  });
+                case "scene09":
+                  gsap__WEBPACK_IMPORTED_MODULE_4__["default"].timeline({
+                    defaults: {
+                      duration: 1.5,
+                      ease: "power3.inOut"
+                    }
+                  }).to(sObj.camera.position, {
+                    x: -2.9,
+                    y: 5,
+                    z: 13.5
+                  }).to(cameraTarget.position, {
+                    x: 2.3,
+                    y: -2,
+                    z: -6.3
+                  }, "<");
                   break;
               }
               if (animClip.st1[i].paused = true) {
@@ -7891,28 +7957,25 @@ const mainAnim = function (idContainer, targetLoader, callback) {
             intersects[0].object.hoverAnim = true;
           } else {
             for (let i = 0; i < animClip.st1.length; i++) {
-              gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(sObj.camera.position, {
-                duration: 1,
-                ease: "none",
-                x: 0.385,
-                y: 10.1,
-                z: 20
-              });
-              gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(cameraTarget.position, {
-                duration: 1,
-                ease: "none",
-                x: 0.2,
-                y: 0,
-                z: 0
-              });
-              gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(sObj.camera, {
-                duration: 1,
-                ease: "none",
+              gsap__WEBPACK_IMPORTED_MODULE_4__["default"].timeline({
+                defaults: {
+                  duration: 1.5,
+                  ease: "power3.inOut"
+                }
+              }).to(sObj.camera.position, {
+                x: 10.1,
+                y: 10.05,
+                z: 30.7
+              }).to(cameraTarget.position, {
+                x: 10.05,
+                y: -8,
+                z: -6.3
+              }, "<").to(sObj.camera, {
                 zoom: 1,
                 onUpdate: function () {
                   sObj.camera.updateProjectionMatrix();
                 }
-              });
+              }, "<");
               animClip.st1[i].paused = true;
             }
             elem.hoverAnim = false;
@@ -8093,6 +8156,18 @@ const mainAnim = function (idContainer, targetLoader, callback) {
 
 /***/ }),
 
+/***/ "./node_modules/file-loader/dist/cjs.js?outputPath=./models/&name=[name].[ext]!./src/pages/index/model/TEST.gltf":
+/*!***********************************************************************************************************************!*\
+  !*** ./node_modules/file-loader/dist/cjs.js?outputPath=./models/&name=[name].[ext]!./src/pages/index/model/TEST.gltf ***!
+  \***********************************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "models/TEST.gltf");
+
+/***/ }),
+
 /***/ "./node_modules/file-loader/dist/cjs.js?outputPath=./models/&name=[name].[ext]!./src/pages/index/model/adams_place_bridge_low.hdr":
 /*!****************************************************************************************************************************************!*\
   !*** ./node_modules/file-loader/dist/cjs.js?outputPath=./models/&name=[name].[ext]!./src/pages/index/model/adams_place_bridge_low.hdr ***!
@@ -8102,18 +8177,6 @@ const mainAnim = function (idContainer, targetLoader, callback) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "models/adams_place_bridge_low.hdr");
-
-/***/ }),
-
-/***/ "./node_modules/file-loader/dist/cjs.js?outputPath=./models/&name=[name].[ext]!./src/pages/index/model/animscene2.gltf":
-/*!*****************************************************************************************************************************!*\
-  !*** ./node_modules/file-loader/dist/cjs.js?outputPath=./models/&name=[name].[ext]!./src/pages/index/model/animscene2.gltf ***!
-  \*****************************************************************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "models/animscene2.gltf");
 
 /***/ }),
 
