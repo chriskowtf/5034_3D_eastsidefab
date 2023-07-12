@@ -256,6 +256,7 @@ export const mainAnim = function (idContainer, targetLoader, callback) {
     controls.enabled = debugMode
 
     let animHoverArr = [];
+    let animHoverArrHover = [];
     let mouseArr = {
       x: 0,
       y: 0,
@@ -303,12 +304,47 @@ export const mainAnim = function (idContainer, targetLoader, callback) {
       animHoverArr.push(scene.getObjectByName("scene07"))
       animHoverArr.push(scene.getObjectByName("scene08"))
       animHoverArr.push(scene.getObjectByName("scene09"))
+      animHoverArrHover.push(scene.getObjectByName("scene1HoverBig"))
 
       window.addEventListener("click", onmousemove, false);
+      window.addEventListener("mousemove", hover, false);
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        window.addEventListener("touchstart", onmousemove, false);
+      }
 
     })
-    console.log(animClip.st1);
+    let glassPlus = document.querySelector('.glass-plus');
+    let glassPlusContainer = document.querySelector('.glass-plus-container');
+    function hover(event) {
+      mouseArr.x = (event.clientX - container.getBoundingClientRect().left) / (container.offsetWidth) * 2 - 1;
+      mouseArr.y = (-event.clientY + container.getBoundingClientRect().top) / (container.offsetHeight) * 2 + 1;
+      mouseArr.vec.set(mouseArr.x, mouseArr.y, 0.5);
 
+      raycaster.setFromCamera(new THREE.Vector2(mouseArr.x, mouseArr.y), sObj.camera);
+
+      animHoverArrHover.forEach(function (elem) {
+
+        let intersects = raycaster.intersectObject(elem, true);
+
+        if (intersects.length > 0) {
+          if (intersects[0].object.name == "scene1HoverBig" && !intersects[0].object.hoverAnim) {
+            intersects[0].object.hoverAnim = true
+            document.body.classList.add("cursorPointer")
+            gsap.to(glassPlus, { opacity: 1 })
+          }
+
+
+        }
+        else {
+          if (elem.name == "scene1HoverBig" && elem.hoverAnim) {
+            elem.hoverAnim = false
+            document.body.classList.remove("cursorPointer")
+          }
+        }
+      })
+
+
+    }
     function onmousemove(event) {
       mouseArr.x = (event.clientX - container.getBoundingClientRect().left) / (container.offsetWidth) * 2 - 1;
       mouseArr.y = (-event.clientY + container.getBoundingClientRect().top) / (container.offsetHeight) * 2 + 1;
@@ -325,6 +361,7 @@ export const mainAnim = function (idContainer, targetLoader, callback) {
           let objectName = intersects[0].object.name;
 
           if (objectName.startsWith("scene") && !intersects[0].object.hoverAnim) {
+            gsap.to(glassPlusContainer, { opacity: 0 })
 
             for (let i = 0; i < animClip.st1.length; i++) {
               switch (objectName) {
@@ -390,6 +427,8 @@ export const mainAnim = function (idContainer, targetLoader, callback) {
             }
             intersects[0].object.hoverAnim = true;
           } else {
+            gsap.to(glassPlusContainer, { opacity: 1 })
+
             for (let i = 0; i < animClip.st1.length; i++) {
               gsap.timeline({ defaults: { duration: 1.5, ease: "power3.inOut" } })
                 .to(sObj.camera.position, { x: 10.1, y: 10.05, z: 30.7 })

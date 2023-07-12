@@ -4,10 +4,18 @@
 
 <body>
 
-  <section class="dfrnc">
+  <section class="dfrnc" id="dfrnc">
     {{>../../components/loader/loader.hbs}}
     {{!-- <div class="dfrnc-arrow dfrnc-arrow--prev">&lt;</div> --}}
     <div class="dfrnc__anim-canvas" id="mainAnimContainer" data-model="./models/"></div>
+    <div class="glass-plus-container">
+      <div class="glass-plus">
+        {{>img/magnifying-glass-plus-svgrepo-com.svg}}
+      </div>
+    </div>
+    <div class="glass-minus">
+      {{>img/magnifying-glass-minus-svgrepo-com.svg}}
+    </div>
     {{!-- <div class="dfrnc-arrow dfrnc-arrow--next">&gt;</div> --}}
   </section>
 

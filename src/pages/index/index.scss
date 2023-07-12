@@ -7,6 +7,7 @@
 body {
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 // .tempHeight {
@@ -35,4 +36,17 @@ svg {
 
   }
 
+}
+
+.glass-plus,
+.glass-minus {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 40px;
+  z-index: 999;
+}
+
+.cursorPointer {
+  cursor: pointer;
 }

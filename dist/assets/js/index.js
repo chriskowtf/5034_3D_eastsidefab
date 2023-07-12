@@ -7740,6 +7740,7 @@ const mainAnim = function (idContainer, targetLoader, callback) {
     controls.update();
     controls.enabled = debugMode;
     let animHoverArr = [];
+    let animHoverArrHover = [];
     let mouseArr = {
       x: 0,
       y: 0,
@@ -7781,9 +7782,38 @@ const mainAnim = function (idContainer, targetLoader, callback) {
       animHoverArr.push(scene.getObjectByName("scene07"));
       animHoverArr.push(scene.getObjectByName("scene08"));
       animHoverArr.push(scene.getObjectByName("scene09"));
+      animHoverArrHover.push(scene.getObjectByName("scene1HoverBig"));
       window.addEventListener("click", onmousemove, false);
+      window.addEventListener("mousemove", hover, false);
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        window.addEventListener("touchstart", onmousemove, false);
+      }
     });
-    console.log(animClip.st1);
+    let glassPlus = document.querySelector('.glass-plus');
+    let glassPlusContainer = document.querySelector('.glass-plus-container');
+    function hover(event) {
+      mouseArr.x = (event.clientX - container.getBoundingClientRect().left) / container.offsetWidth * 2 - 1;
+      mouseArr.y = (-event.clientY + container.getBoundingClientRect().top) / container.offsetHeight * 2 + 1;
+      mouseArr.vec.set(mouseArr.x, mouseArr.y, 0.5);
+      raycaster.setFromCamera(new three__WEBPACK_IMPORTED_MODULE_2__.Vector2(mouseArr.x, mouseArr.y), sObj.camera);
+      animHoverArrHover.forEach(function (elem) {
+        let intersects = raycaster.intersectObject(elem, true);
+        if (intersects.length > 0) {
+          if (intersects[0].object.name == "scene1HoverBig" && !intersects[0].object.hoverAnim) {
+            intersects[0].object.hoverAnim = true;
+            document.body.classList.add("cursorPointer");
+            gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(glassPlus, {
+              opacity: 1
+            });
+          }
+        } else {
+          if (elem.name == "scene1HoverBig" && elem.hoverAnim) {
+            elem.hoverAnim = false;
+            document.body.classList.remove("cursorPointer");
+          }
+        }
+      });
+    }
     function onmousemove(event) {
       mouseArr.x = (event.clientX - container.getBoundingClientRect().left) / container.offsetWidth * 2 - 1;
       mouseArr.y = (-event.clientY + container.getBoundingClientRect().top) / container.offsetHeight * 2 + 1;
@@ -7795,6 +7825,9 @@ const mainAnim = function (idContainer, targetLoader, callback) {
         if (intersects.length > 0) {
           let objectName = intersects[0].object.name;
           if (objectName.startsWith("scene") && !intersects[0].object.hoverAnim) {
+            gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(glassPlusContainer, {
+              opacity: 0
+            });
             for (let i = 0; i < animClip.st1.length; i++) {
               switch (objectName) {
                 case "scene01":
@@ -7956,6 +7989,9 @@ const mainAnim = function (idContainer, targetLoader, callback) {
             }
             intersects[0].object.hoverAnim = true;
           } else {
+            gsap__WEBPACK_IMPORTED_MODULE_4__["default"].to(glassPlusContainer, {
+              opacity: 1
+            });
             for (let i = 0; i < animClip.st1.length; i++) {
               gsap__WEBPACK_IMPORTED_MODULE_4__["default"].timeline({
                 defaults: {
@@ -15680,8 +15716,10 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.scss */ "./src/pages/index/index.scss");
 /* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./main */ "./src/pages/index/main.js");
+/* harmony import */ var gsap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! gsap */ "./node_modules/gsap/index.js");
 __webpack_require__.e(/*! import() */ "src_components_head_head_js").then(__webpack_require__.t.bind(__webpack_require__, /*! ../../components/head/head */ "./src/components/head/head.js", 23));
 __webpack_require__.e(/*! import() */ "src_components_loader_loader_sass").then(__webpack_require__.bind(__webpack_require__, /*! ../../components/loader/loader.sass */ "./src/components/loader/loader.sass"));
+
 
 
 
@@ -15700,6 +15738,35 @@ function sceneLoaded(scene) {
     document.body.classList.add("pageLoad");
   }, 500);
 }
+let body = document.querySelector('body');
+let glassPlus = document.querySelector('.glass-plus');
+let glassMinus = document.querySelector('.glass-minus');
+gsap__WEBPACK_IMPORTED_MODULE_2__["default"].to(glassPlus, {
+  opacity: 0
+});
+gsap__WEBPACK_IMPORTED_MODULE_2__["default"].to(glassMinus, {
+  opacity: 0
+});
+document.addEventListener('mousemove', e => {
+  let x = e.clientX - body.offsetLeft - glassPlus.offsetWidth * -1;
+  let y = e.clientY - body.offsetTop - glassPlus.offsetHeight * 1;
+  gsap__WEBPACK_IMPORTED_MODULE_2__["default"].to(glassPlus, {
+    duration: 0.02,
+    x: x,
+    y: y,
+    ease: "none"
+  });
+});
+document.addEventListener('mousemove', e => {
+  let x = e.clientX - body.offsetLeft - glassMinus.offsetWidth * -1;
+  let y = e.clientY - body.offsetTop - glassMinus.offsetHeight * 1;
+  gsap__WEBPACK_IMPORTED_MODULE_2__["default"].to(glassMinus, {
+    duration: 0.02,
+    x: x,
+    y: y,
+    ease: "none"
+  });
+});
 }();
 /******/ })()
 ;
